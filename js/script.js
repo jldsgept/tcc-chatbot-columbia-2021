@@ -8,9 +8,9 @@ window.addEventListener('dfMessengerLoaded',function(event) {
         fetch(url_base + 'servicios')
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 df_messenger.renderCustomText("Respuesta de la base de datos");
                 df_messenger.renderCustomText(data.p_servicio[0]);
-                console.log(data)
             })
             .then(error => console.log(error))
     })
