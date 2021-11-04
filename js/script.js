@@ -10,7 +10,7 @@ window.addEventListener('dfMessengerLoaded',function(event) {
             .then(data => {
                 console.log(data)
                 df_messenger.renderCustomText("Respuesta de la base de datos");
-                df_messenger.renderCustomText(data[0].p_servicio);
+                df_messenger.renderCustomText(data[0].p_servicio + " (Precio : "+ data[0].p_precio + " GS al mes)");
             })
             .then(error => console.log(error))
     })
