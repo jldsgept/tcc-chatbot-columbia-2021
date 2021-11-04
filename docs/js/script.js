@@ -9,7 +9,7 @@ window.addEventListener('dfMessengerLoaded',function(event) {
             .then(response => response.json())
             .then(data => {
                 df_messenger.renderCustomText("Respuesta de la base de datos");
-                df_messenger.renderCustomText(data.rows[0].p_servicio);
+                df_messenger.renderCustomText(data.p_servicio[0]);
                 console.log(data)
             })
             .then(error => console.log(error))
