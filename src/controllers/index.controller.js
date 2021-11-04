@@ -22,6 +22,15 @@ const getServicios = async (req, res) => {
     }
 };
 
+
+const getFacturas = async (req, res) => {
+    try{
+        const response = await pool.query(`SELECT  '2021-12-15' as vencimiento, 85000 as monto`)
+        res.status(200).json(response.rows);
+    }catch(e) {
+        console.log(e);
+    }
+};
 /*
 const createTask = async (req, res) => {
     const { id, descripcion } = req.body;
@@ -35,5 +44,6 @@ const createTask = async (req, res) => {
 };*/
 
 module.exports = {
-    getServicios
+    getServicios,
+    getFacturas
 };
