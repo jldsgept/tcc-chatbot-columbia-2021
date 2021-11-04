@@ -7,7 +7,10 @@ window.addEventListener('dfMessengerLoaded',function(event) {
         //alert('Has pulsado la opcion '+event.detail.element.title)
         fetch(url_base + 'servicios')
             .then(response => response.json())
-            .then(data => console.log(data))
+            .then(data => {
+                df_messenger.renderCustomText(data.rows[0].p_servicio);
+                console.log(data)
+            })
             .then(error => console.log(error))
     })
 });
