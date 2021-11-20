@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const {WebhookClient} = require('dialogflow-fulfillment');
 
 const config = {
     host: 'ec2-54-159-176-167.compute-1.amazonaws.com',
@@ -31,19 +32,31 @@ const getFacturas = async (req, res) => {
         console.log(e);
     }
 };
-/*
-const createTask = async (req, res) => {
-    const { id, descripcion } = req.body;
-    const response = await pool.query('INSERT INTO tareas (id, descripcion) VALUES ($1, $2)', [id, descripcion]);
-    res.json({
-        message: 'Task updated successfully',
-        body: {
-            task: {id, descripcion}
-        }
-    })
-};*/
+
+const webhook = async (req, res) => {
+    const agent = new WebhookClient({ request: req, response: res });
+    let intentMap = new Map();
+
+    function verFactura(agent) {
+        agent.add(`Ver Factura`);
+    }
+
+    function verServicios(agent) {
+        agent.add(`Ver Servicios`);
+    }
+
+    function verTicket(agent) {
+        agent.add(`Ver Ticket`);
+    }
+
+    intentMap.set('VerTicket', verTicket);
+    intentMap.set('VerServicios', verServicios);
+    intentMap.set('VerFactura', verFactura);
+    agent.handleRequest(intentMap);
+};
 
 module.exports = {
     getServicios,
-    getFacturas
+    getFacturas,
+    webhook
 };
