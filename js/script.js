@@ -1,4 +1,4 @@
-const url_base = 'https://tcc-chatbot-columbia-2021.herokuapp.com/'
+/*const url_base = 'https://tcc-chatbot-columbia-2021.herokuapp.com/'
 
 window.addEventListener('dfMessengerLoaded',function(event) {
     const df_messenger = document.querySelector('df-messenger');
@@ -26,4 +26,4 @@ window.addEventListener('dfMessengerLoaded',function(event) {
                 .then(error => console.log(error))
         }
     })
-});
+});*/
