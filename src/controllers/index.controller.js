@@ -42,7 +42,7 @@ const webhook = async (req, res) => {
     }
 
     function verServicios(agent) {
-        let tipo_servicio = agent.parameters.tiposservicios
+        let tipo_servicio = agent.parameters['TiposServicios']
         agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
         agent.add('Le interesa algun otro servicio?');
     }
