@@ -48,7 +48,6 @@ const webhook = async (req, res) => {
         try{
             rs = pool.query(sqlstring)
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
-            agent.add(rs);
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 card = new Card({   title: rs.rows[i].p_servicio,
                                     imageUrl: rs.rows[i].p_url_imagen,
@@ -58,7 +57,7 @@ const webhook = async (req, res) => {
             }
             agent.add('Le interesa algun otro servicio?');
         }catch(e){
-            console.log(e)
+            agent.add(e)
         }
     }
 
