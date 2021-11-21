@@ -41,12 +41,12 @@ const webhook = async (req, res) => {
         agent.add(`Ver Factura`);
     }
 
-    function verServicios(agent) {
+    async function verServicios(agent) {
         let card, sqlstring, tipo_servicio, rs
         tipo_servicio = agent.parameters['TiposServicios']
         sqlstring = `SELECT * FROM f_get_info_servicios('${tipo_servicio}')`
         try{
-            rs = pool.query(sqlstring)
+            rs = await pool.query(sqlstring)
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
             agent.add(rs.rows[0].p_servicio);
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
