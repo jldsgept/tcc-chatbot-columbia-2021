@@ -50,8 +50,8 @@ const webhook = async (req, res) => {
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 agent.add(new Card({
-					                title: `Title: this is a card title`,
-                                    imageUrl: 'https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_VER.png',
+					                title: rs.rows[i].p_servicio,
+                                    imageUrl: rs.rows[i].p_url_imagen,
                                     text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
                                     buttonText: 'This is a button',
                                     buttonUrl: 'https://assistant.google.com/'
