@@ -50,6 +50,7 @@ const webhook = async (req, res) => {
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
             agent.add(`${rs.rowCount}`);
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                agent.add(`Imprimiendo desde el for: ${i}`);
                 card = new Card({   title: rs.rows[i].p_servicio,
                                     imageUrl: rs.rows[i].p_url_imagen,
                                     text: rs.rows[i].p_especificaciones
