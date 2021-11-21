@@ -1,5 +1,7 @@
 const { Pool } = require('pg');
-const {WebhookClient, Card} = require('dialogflow-fulfillment');
+const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
+
 
 const config = {
     host: 'ec2-54-159-176-167.compute-1.amazonaws.com',
@@ -57,6 +59,7 @@ const webhook = async (req, res) => {
                                     buttonUrl: 'https://assistant.google.com/'
 				                    })
 			            )
+                agent.add(new Suggestion(`Suggestion`));
             }
             agent.add('Le interesa algun otro servicio?');
         }catch(e){
