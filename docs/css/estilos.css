@@ -249,7 +249,7 @@ input[type="email"]{
 }
 
 input[type="submit"]{
-    width: 120px;
+    width: 100%;
     text-align: center;
     padding: 14px 0;
 }
