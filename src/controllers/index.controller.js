@@ -55,7 +55,7 @@ const webhook = async (req, res) => {
                                     imageUrl: rs.rows[i].p_url_imagen,
                                     text: rs.rows[i].p_especificaciones
                                 })
-                agent.add(`Imprimiendo desde el for: ${card}`);
+                agent.add(JSON.stringify(card));
             }
             agent.add('Le interesa algun otro servicio?');
         }catch(e){
