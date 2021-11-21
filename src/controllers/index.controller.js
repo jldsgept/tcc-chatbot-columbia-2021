@@ -54,12 +54,11 @@ const webhook = async (req, res) => {
                 agent.add(new Card({
 					                title: rs.rows[i].p_servicio,
                                     imageUrl: rs.rows[i].p_url_imagen,
-                                    text: `This is the body text of a card.  You can even use line\n  breaks and emoji! 💁`,
-                                    buttonText: 'This is a button',
-                                    buttonUrl: 'https://assistant.google.com/'
+                                    text: rs.rows[i].p_especificaciones,
+                                    buttonText: 'Ver imagen',
+                                    buttonUrl: rs.rows[i].p_url_imagen
 				                    })
 			            )
-                agent.add(new Suggestion(`Suggestion`));
             }
             agent.add('Le interesa algun otro servicio?');
         }catch(e){
