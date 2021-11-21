@@ -45,6 +45,7 @@ const webhook = async (req, res) => {
         let card, sqlstring, tipo_servicio, response
         tipo_servicio = agent.parameters['TiposServicios']
         sqlstring = `SELECT * FROM f_get_info_servicios('${tipo_servicio}')`
+        console.log(sqlstring)
         try{
             response = await pool.query(sqlstring)
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
