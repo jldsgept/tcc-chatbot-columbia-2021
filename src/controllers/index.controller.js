@@ -45,21 +45,20 @@ const webhook = async (req, res) => {
         let card, sqlstring, tipo_servicio, rs
         tipo_servicio = agent.parameters['TiposServicios']
         sqlstring = `SELECT * FROM f_get_info_servicios('${tipo_servicio}')`
-        /*try{*/
+        try{
             rs = await pool.query(sqlstring)
             agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
-            agent.add(sqlstring);
-            /*for (let i = 0; i <= (rs.rowCount - 1); i++) {
+            for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 card = new Card({   title: rs.rows[i].p_servicio,
                                     imageUrl: rs.rows[i].p_url_imagen,
                                     text: rs.rows[i].p_especificaciones
                                 })
                 agent.add(card);
-            }*/
+            }
             agent.add('Le interesa algun otro servicio?');
-        /*}catch(e){
+        }catch(e){
             console.log(e)
-        }*/
+        }
     }
 
     function verTicket(agent) {
