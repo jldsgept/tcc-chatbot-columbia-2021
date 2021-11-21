@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const {WebhookClient} = require('dialogflow-fulfillment');
+const {WebhookClient, Card} = require('dialogflow-fulfillment');
 
 const config = {
     host: 'ec2-54-159-176-167.compute-1.amazonaws.com',
@@ -42,8 +42,16 @@ const webhook = async (req, res) => {
     }
 
     function verServicios(agent) {
+        let card
         let tipo_servicio = agent.parameters['TiposServicios']
+        let response = await pool.query(`SELECT * FROM f_get_info_servicios( ${tipo_servicio} )`)
         agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
+        for (let i = 0; i <= (response.rowCount - 1); i++) {
+            card = new Card({title: response.rows.p_servicio[i],
+                            imageUrl: response.rows.p_url_imagen[i],
+                            text: response.rows.p_especificaciones[i]})
+            agent.add(card);
+        }
         agent.add('Le interesa algun otro servicio?');
     }
 
