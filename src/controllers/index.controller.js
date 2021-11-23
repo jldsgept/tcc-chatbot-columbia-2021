@@ -54,6 +54,26 @@ const webhook = async (req, res) => {
         }
     }
 
+    async function verSugerencias(agent) {
+        let sqlstring, codigo, rs
+        codigo = agent.parameters['number']
+        sqlstring = `SELECT * FROM f_get_info_errores_frecuentes('${codigo}')`
+        try{
+            rs = await pool.query(sqlstring)
+            if (rs.rowCount > 0) {
+                agent.add(`Hemos encontrado las siguientes sugerencias para el error ${codigo} - ${rs.rows[i].p_error}`);
+                for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                    agent.add(`(${i}) ${rs.rows[i].p_sugerencia}`)
+                }
+            }else{
+                agent.add('No hemos encontrado una sugerencia para su error, comuniquela via mail y pronto estar disponible una solucion en nuestro BOT');
+            }
+            agent.add('Le podemos ayudar en algo mas?');
+        }catch(e){
+            agent.add(e)
+        }
+    }
+
     async function verServicios(agent) {
         let sqlstring, tipo_servicio, rs
         tipo_servicio = agent.parameters['TiposServicios']
@@ -85,6 +105,7 @@ const webhook = async (req, res) => {
     intentMap.set('VerTicket', verTicket);
     intentMap.set('VerServicios', verServicios);
     intentMap.set('VerFactura', verFactura);
+    intentMap.set('verSugerencias', verSugerencias);
     agent.handleRequest(intentMap);
 };
 
