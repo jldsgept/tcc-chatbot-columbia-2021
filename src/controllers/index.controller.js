@@ -39,7 +39,7 @@ const webhook = async (req, res) => {
     const agent = new WebhookClient({ request: req, response: res });
     let intentMap = new Map();
 
-    function verFactura(agent) {
+    async function verFactura(agent) {
         let sqlstring, cedula, rs
         cedula = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
