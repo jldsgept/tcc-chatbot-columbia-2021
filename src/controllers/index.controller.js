@@ -62,9 +62,9 @@ const webhook = async (req, res) => {
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 if (i === 0) {
-                    agent.add(`Hemos encontrado las siguientes sugerencias para el error ${codigo} - ${rs.rows[i].p_error}`);
+                    agent.add(`Hemos encontrado las siguientes sugerencias para el error (${codigo} - ${rs.rows[i].p_error}):`);
                 }
-                agent.add(`(${i}) ${rs.rows[i].p_sugerencia}`)
+                agent.add(`(${(i+1)}) ${rs.rows[i].p_sugerencia}`)
             }
             /*}else{
                 agent.add('No hemos encontrado una sugerencia para su error, comuniquela via mail y pronto estar disponible una solucion en nuestro BOT');
