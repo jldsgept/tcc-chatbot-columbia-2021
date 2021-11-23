@@ -46,7 +46,10 @@ const webhook = async (req, res) => {
         try{
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
-                agent.add(`Hola ${rs.rows[i].p_nombre}, su proxima factura es por el monto de ${rs.rows[i].p_monto} GS y vence en fecha ${rs.rows[i].p_vencimiento}`)
+                agent.add(`Estimado cliente ${rs.rows[i].p_nombre}, su proxima factura es por el monto de ${rs.rows[i].p_monto} GS y vence en fecha ${rs.rows[i].p_vencimiento}`)
+            }
+            if (rs.rowCount === 0) {
+                agent.add(`No se han encontrado facturas pendientes para el numero de cedula: ${cedula}`);
             }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
