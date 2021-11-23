@@ -40,7 +40,18 @@ const webhook = async (req, res) => {
     let intentMap = new Map();
 
     function verFactura(agent) {
-        agent.add(`Ver Factura`);
+        let sqlstring, cedula, rs
+        cedula = agent.parameters['number']
+        sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
+        try{
+            rs = await pool.query(sqlstring)
+            for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                agent.add(`Hola ${rs.rows[i].p_nombre} su proxima factura por el monto de ${rs.rows[i].p_monto} GS vence en fecha ${rs.rows[i].p_vencimiento}`)
+            }
+            agent.add('Le podemos ayudar en algo mas?');
+        }catch(e){
+            agent.add(e)
+        }
     }
 
     async function verServicios(agent) {
@@ -56,7 +67,7 @@ const webhook = async (req, res) => {
 					                title: `${rs.rows[i].p_servicio} por ${rs.rows[i].p_precio} GS/mes`,
                                     imageUrl: rs.rows[i].p_url_imagen,
                                     text: rs.rows[i].p_especificaciones,
-                                    buttonText: 'Ver imagen',
+                                    buttonText: 'Ver Servicio',
                                     buttonUrl: rs.rows[i].p_url_imagen
 				                    })
 			            )
