@@ -39,6 +39,25 @@ const webhook = async (req, res) => {
     const agent = new WebhookClient({ request: req, response: res });
     let intentMap = new Map();
 
+    async function crearTicket(agent) {
+        let sqlstring, cedula, rs, texto
+        cedula = agent.parameters['number']
+        texto = agent.query
+        sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
+        try{
+            rs = await pool.query(sqlstring)
+            for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                agent.add(`Estimado cliente ${rs.rows[i].p_nombre}, su proxima factura es por el monto de ${rs.rows[i].p_monto} GS y vence en fecha ${rs.rows[i].p_vencimiento}`)
+            }
+            if (rs.rowCount === 0) {
+                agent.add(`No se han encontrado facturas pendientes para el numero de cedula: ${cedula}`);
+            }
+            agent.add('Le podemos ayudar en algo mas?');
+        }catch(e){
+            agent.add(e)
+        }
+    }
+
     async function verFactura(agent) {
         let sqlstring, cedula, rs
         cedula = agent.parameters['number']
@@ -107,6 +126,7 @@ const webhook = async (req, res) => {
     }
 
     intentMap.set('VerTicket', verTicket);
+    intentMap.set('VerTicket', crearTicket);
     intentMap.set('VerServicios', verServicios);
     intentMap.set('VerFactura', verFactura);
     intentMap.set('VerSugerencias', verSugerencias);
