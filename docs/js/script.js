@@ -6,6 +6,6 @@ FORM.addEventListener('submit', handleSubmit)
 function handleSubmit(event){
     event.preventDefault()
     const a_form = new FormData(this)
-    SEND_MAIL.setAttribute('href',`mailto:jldubrez@gmail.com?subject=prueba&body=${a_form.get('contenido')}`)
+    SEND_MAIL.setAttribute('href',`mailto:jldsgept.tcc2021@gmail.com?subject=Prueba&body=${a_form.get('contenido')}`)
     SEND_MAIL.click()
 }
