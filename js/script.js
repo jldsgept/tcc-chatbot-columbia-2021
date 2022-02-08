@@ -5,7 +5,12 @@ FORM.addEventListener('submit', handleSubmit)
 
 function handleSubmit(event){
     event.preventDefault()
-    const a_form = new FormData(this)
-    SEND_MAIL.setAttribute('href',`mailto:jldsgept.tcc2021@gmail.com?subject=Prueba&body=${a_form.get('contenido')}`)
+    const FORM_DATA = new FormData(this)
+    let name, email, subject, message
+    name = FORM_DATA.get('nombre')
+    email = FORM_DATA.get('email')
+    subject = `Mensaje de ${name} (${email})`
+    message = FORM_DATA.get('contenido')
+    SEND_MAIL.setAttribute('href',`mailto:jldsgept.tcc2021@gmail.com?subject=${subject}&body=${message}`)
     SEND_MAIL.click()
 }
