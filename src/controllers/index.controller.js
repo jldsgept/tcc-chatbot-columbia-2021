@@ -25,16 +25,6 @@ const getServicios = async (req, res) => {
     }
 };
 
-
-const getFacturas = async (req, res) => {
-    try{
-        const response = await pool.query(`SELECT  '2021-12-15' as vencimiento, 85000 as monto`)
-        res.status(200).json(response.rows);
-    }catch(e) {
-        console.log(e);
-    }
-};
-
 const webhook = async (req, res) => {
     const agent = new WebhookClient({ request: req, response: res });
     let intentMap = new Map();
@@ -135,6 +125,5 @@ const webhook = async (req, res) => {
 
 module.exports = {
     getServicios,
-    getFacturas,
     webhook
 };
