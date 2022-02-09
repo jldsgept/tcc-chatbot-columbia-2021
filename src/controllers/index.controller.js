@@ -16,6 +16,14 @@ const config = {
 
 const pool = new Pool(config)
 
+const welcome = async (req, res) => {
+    try{
+        res.send('La API REST esta a la escucha');
+    }catch(e) {
+        console.log(e);
+    }
+};
+
 const getServicios = async (req, res) => {
     try{
         const response = await pool.query(`SELECT * FROM f_get_info_servicios('APP')`)
@@ -124,6 +132,7 @@ const webhook = async (req, res) => {
 };
 
 module.exports = {
+    welcome,
     getServicios,
     webhook
 };
