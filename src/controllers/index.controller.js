@@ -44,12 +44,13 @@ const webhook = async (req, res) => {
         texto = agent.query
         sqlstring = `SELECT p_inserta_ticket('${cedula}', 1, '${texto}', '${prioridad}')`
         try{
-            agent.add(sqlstring)
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
-                agent.add(`Se ha creado un ticket para atender su caso, el numero de su ticket es:  ${rs.rows[i].p_inserta_ticket}`)
+                agent.add(`Se ha creado un ticket para atender su caso. El numero de su ticket para darle seguimiento es:  ${rs.rows[i].p_inserta_ticket}`)
             }
-            //agent.add(`No se puede crear el ticket debido a que el numero de cedula ${cedula} no pertenece a un cliente registrado`)
+            if (rs.rows[0].p_inserta_ticket === 0) {
+                agent.add(`No se puede crear el ticket debido a que el numero de cedula ${cedula} no pertenece a un cliente registrado`)
+            }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
             agent.add(e)
