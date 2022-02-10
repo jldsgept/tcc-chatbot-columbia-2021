@@ -38,7 +38,7 @@ const webhook = async (req, res) => {
     let intentMap = new Map();
 
     async function crearTicket(agent) {
-        let sqlstring, cedula, rs, texto, prioridad, nro_ticket
+        let sqlstring, cedula, rs, texto, prioridad
         cedula = agent.parameters['number']
         prioridad = agent.parameters['PrioridadTicket']
         texto = agent.query
@@ -46,12 +46,10 @@ const webhook = async (req, res) => {
         console.log(sqlstring)
         try{
             rs = await pool.query(sqlstring)
-            nro_ticket = rs.rows[0].p_inserta_ticket
-            if (nro_ticket > 0){
-                agent.add(`Se ha creado un ticket para atender su caso, el numero de su ticket es:  ${nro_ticket}`)
-            }else{
-                agent.add(`No se puede crear el ticket debido a que el numero de cedula ${cedula} no pertenece a un cliente registrado`)
+            for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                agent.add(`Se ha creado un ticket para atender su caso, el numero de su ticket es:  ${rs.rows[i].p_inserta_ticket}`)
             }
+            //agent.add(`No se puede crear el ticket debido a que el numero de cedula ${cedula} no pertenece a un cliente registrado`)
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
             agent.add(e)
