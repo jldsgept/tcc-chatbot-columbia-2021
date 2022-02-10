@@ -89,7 +89,7 @@ const webhook = async (req, res) => {
                 agent.add(`(${(i+1)}) ${rs.rows[i].p_sugerencia}`)
             }
             if (rs.rowCount === 0) {
-                agent.add('No hemos encontrado una sugerencia para su error, comuniquela via mail y pronto estara disponible una sugerencia para el mismo en nuestro BOT');
+                agent.add('No hemos encontrado una sugerencia para su error. Le sugerimos que cree un ticket de soporte indicando mas detalles sobre su inconveniente.');
             }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
