@@ -125,6 +125,7 @@ const webhook = async (req, res) => {
         let sqlstring, nro_ticket, rs
         nro_ticket = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_estado_ticket(${nro_ticket})`
+        agent.add(sqlstring)
         try{
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
