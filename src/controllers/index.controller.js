@@ -143,7 +143,7 @@ const webhook = async (req, res) => {
         }
     }
 
-    intentMap.set('VerTicket', ticket);
+    intentMap.set('VerTicket', verSugerencias);
     intentMap.set('CrearTicket', crearTicket);
     intentMap.set('VerServicios', verServicios);
     intentMap.set('VerFactura', verFactura);
