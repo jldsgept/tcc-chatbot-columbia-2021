@@ -44,7 +44,7 @@ const webhook = async (req, res) => {
         try{
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
-                agent.add(`Estimado cliente ${rs.rows[i].p_cliente} su ticket numero ${nro_ticket} de prioridad ${rs.rows[i].p_cliente} se encuentra en estado ${rs.rows[i].p_estado} y esta siendo atendido por el departamento de ${rs.rows[i].p_departamento}`);
+                agent.add(`Estimado cliente ${rs.rows[i].p_cliente} su ticket numero ${nro_ticket} de prioridad ${rs.rows[i].p_prioridad} se encuentra en estado ${rs.rows[i].p_estado} y esta siendo atendido por el departamento de ${rs.rows[i].p_departamento}`);
             }
             if (rs.rowCount === 0) {
                 agent.add(`No hemos encontrado informacion sobre el ticket ${nro_ticket} que consulto`);
