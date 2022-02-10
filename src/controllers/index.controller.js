@@ -37,6 +37,28 @@ const webhook = async (req, res) => {
     const agent = new WebhookClient({ request: req, response: res });
     let intentMap = new Map();
 
+    function ticket(agent) {
+        let sqlstring, nro_ticket, rs
+        agent.add('Respuesta de Ver Ticket 1');
+        nro_ticket = agent.parameters['number']
+        agent.add('Respuesta de Ver Ticket 2');
+        //sqlstring = `SELECT * FROM f_get_estado_ticket(${nro_ticket})`
+        sqlstring = `SELECT * FROM f_get_info_errores_frecuentes('9999')`
+        agent.add(sqlstring)
+        try{
+            rs = await pool.query(sqlstring)
+            /*for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                agent.add(`Estimado cliente ${rs.rows[i].p_cliente} su ticket numero ${nro_ticket} de prioridad ${rs.rows[i].p_cliente} se encuentra en estado ${rs.rows[i].p_estado} y esta siendo atendido por el departamento de ${rs.rows[i].p_departamento}`);
+            }*/
+            if (rs.rowCount === 0) {
+                agent.add(`No hemos encontrado informacion sobre el ticket ${nro_ticket} que consulto`);
+            }
+            agent.add('Le podemos ayudar en algo mas?');
+        }catch(e){
+            agent.add(e)
+        }
+    }
+
     async function crearTicket(agent) {
         let sqlstring, cedula, rs, texto, prioridad
         cedula = agent.parameters['number']
@@ -121,29 +143,7 @@ const webhook = async (req, res) => {
         }
     }
 
-    function verTicket(agent) {
-        let sqlstring, nro_ticket, rs
-        agent.add('Respuesta de Ver Ticket 1');
-        nro_ticket = agent.parameters['number']
-        agent.add('Respuesta de Ver Ticket 2');
-        //sqlstring = `SELECT * FROM f_get_estado_ticket(${nro_ticket})`
-        sqlstring = `SELECT * FROM f_get_info_errores_frecuentes('9999')`
-        agent.add(sqlstring)
-        try{
-            rs = await pool.query(sqlstring)
-            /*for (let i = 0; i <= (rs.rowCount - 1); i++) {
-                agent.add(`Estimado cliente ${rs.rows[i].p_cliente} su ticket numero ${nro_ticket} de prioridad ${rs.rows[i].p_cliente} se encuentra en estado ${rs.rows[i].p_estado} y esta siendo atendido por el departamento de ${rs.rows[i].p_departamento}`);
-            }*/
-            if (rs.rowCount === 0) {
-                agent.add(`No hemos encontrado informacion sobre el ticket ${nro_ticket} que consulto`);
-            }
-            agent.add('Le podemos ayudar en algo mas?');
-        }catch(e){
-            agent.add(e)
-        }
-    }
-
-    intentMap.set('VerTicket', verTicket);
+    intentMap.set('VerTicket', ticket);
     intentMap.set('CrearTicket', crearTicket);
     intentMap.set('VerServicios', verServicios);
     intentMap.set('VerFactura', verFactura);
