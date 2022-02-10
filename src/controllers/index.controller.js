@@ -43,6 +43,7 @@ const webhook = async (req, res) => {
         prioridad = agent.parameters['PrioridadTicket']
         texto = agent.query
         sqlstring = `SELECT p_inserta_ticket('${cedula}', 1, '${texto}', '${prioridad}')`
+        console.log(sqlstring)
         try{
             rs = await pool.query(sqlstring)
             nro_ticket = rs.rows[0].p_inserta_ticket
