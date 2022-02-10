@@ -41,8 +41,8 @@ const webhook = async (req, res) => {
         let sqlstring, nro_ticket, rs
         nro_ticket = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_estado_ticket(${nro_ticket})`
-        //agent.add(sqlstring)
-        try{
+        agent.add(sqlstring)
+        /*try{
             rs = await pool.query(sqlstring)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 agent.add(`Estimado cliente ${rs.rows[i].p_cliente} su ticket numero ${nro_ticket} de prioridad ${rs.rows[i].p_cliente} se encuentra en estado ${rs.rows[i].p_estado} y esta siendo atendido por el departamento de ${rs.rows[i].p_departamento}`);
@@ -53,7 +53,7 @@ const webhook = async (req, res) => {
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
             agent.add(e)
-        }
+        }*/
     }
 
     async function crearTicket(agent) {
