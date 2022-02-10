@@ -122,7 +122,7 @@ const webhook = async (req, res) => {
     }
 
     function verTicket(agent) {
-        let sqlstring, nro_ticket, rs
+        /*let sqlstring, nro_ticket, rs
         nro_ticket = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_estado_ticket(${nro_ticket})`
         agent.add(sqlstring)
@@ -137,7 +137,8 @@ const webhook = async (req, res) => {
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
             agent.add(e)
-        }
+        }*/
+        agent.add('Respuesta de Ver Ticket');
     }
 
     intentMap.set('VerTicket', verTicket);
