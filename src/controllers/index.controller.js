@@ -38,8 +38,7 @@ const webhook = async (req, res) => {
     let intentMap = new Map();
 
     async function crearTicket(agent) {
-        agent.add(`Crear Ticket`);
-        /*let sqlstring, cedula, rs, texto, prioridad
+        let sqlstring, cedula, rs, texto, prioridad
         cedula = agent.parameters['number']
         prioridad = agent.parameters['PrioridadTicket']
         texto = agent.query
@@ -54,7 +53,7 @@ const webhook = async (req, res) => {
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
             agent.add(e)
-        }*/
+        }
     }
 
     async function verFactura(agent) {
