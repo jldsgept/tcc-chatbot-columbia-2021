@@ -38,17 +38,18 @@ const webhook = async (req, res) => {
     let intentMap = new Map();
 
     async function crearTicket(agent) {
-        let sqlstring, cedula, rs, texto
+        let sqlstring, cedula, rs, texto, prioridad, nro_ticket
         cedula = agent.parameters['number']
+        prioridad = agent.parameters['PrioridadTicket']
         texto = agent.query
-        sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
+        sqlstring = `SELECT p_inserta_ticket('${cedula}', 1, '${texto}', '${prioridad}')`
         try{
             rs = await pool.query(sqlstring)
-            for (let i = 0; i <= (rs.rowCount - 1); i++) {
-                agent.add(`Estimado cliente ${rs.rows[i].p_nombre}, su proxima factura es por el monto de ${rs.rows[i].p_monto} GS y vence en fecha ${rs.rows[i].p_vencimiento}`)
-            }
-            if (rs.rowCount === 0) {
-                agent.add(`No se han encontrado facturas pendientes para el numero de cedula: ${cedula}`);
+            nro_ticket = rs.rows[0].p_inserta_ticket
+            if (nro_ticket > 0){
+                agent.add(`Se ha creado un ticket para atender su caso, el numero de su ticket es:  ${nro_ticket}`)
+            }else{
+                agent.add(`No se puede crear el ticket debido a que el numero de cedula ${cedula} no pertenece a un cliente registrado`)
             }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
@@ -124,7 +125,7 @@ const webhook = async (req, res) => {
     }
 
     intentMap.set('VerTicket', verTicket);
-    intentMap.set('VerTicket', crearTicket);
+    intentMap.set('CrearTicket', crearTicket);
     intentMap.set('VerServicios', verServicios);
     intentMap.set('VerFactura', verFactura);
     intentMap.set('VerSugerencias', verSugerencias);
