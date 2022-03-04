@@ -96,10 +96,13 @@ const webhook = async (req, res) => {
 
     async function verSugerencias(agent) {
         let sqlstring, codigo, rs
+        let sqlstring_aux, rs_aux
         codigo = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_info_errores_frecuentes('${codigo}')`
+        sqlstring_aux = `SELECT * FROM errores where codigo = ('${codigo}')`
         try{
             rs = await pool.query(sqlstring)
+            rs_aux = await pool.query(sqlstring_aux)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 if (i === 0) {
                     agent.add(`Hemos encontrado las siguientes sugerencias para el error (${codigo} - ${rs.rows[i].p_error}):`);
@@ -107,7 +110,11 @@ const webhook = async (req, res) => {
                 agent.add(`(${(i+1)}) ${rs.rows[i].p_sugerencia}`)
             }
             if (rs.rowCount === 0) {
-                agent.add('No hemos encontrado una sugerencia para su error. Le sugerimos que cree un ticket de soporte indicando mas detalles sobre su inconveniente.');
+                if (rs_aux.rowCount > 0) {
+                    agent.add(`Hemos verificado la existencia del error (${codigo} - ${rs_aux.rows[0].descripcion}). Sin embargo no contamos aun con sugerencia de soluciones para el mismo. Le recomendamos ingresar un ticket de soporte.`);
+                }else{
+                    agent.add(`Desconocemos la existencia de un error con el codigo: ${codigo}. Favor verifique que lo haya escrito correctamente.`);
+                }
             }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
