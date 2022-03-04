@@ -100,13 +100,12 @@
     <footer id="contacto">
         <div class="contenedor">
             <h2 class="titulo">Conversemos</h2>
-            <form action="" class="form" id="form">
-                <input class="input"  type="text" name="nombre" id="" placeholder="Nombre">
-                <input class="input"  type="email" name="email" id="" placeholder="Email">
-                <textarea  class="input" name="contenido" id="" cols="30" rows="10" placeholder="Mensaje"></textarea>
+            <form action="https://tcc-chatbot-columbia-2021.herokuapp.com/mensajes" method="POST" class="form" id="form">
+                <input class="input"  type="text" name="nombre" id="nombre" placeholder="Nombre">
+                <input class="input"  type="email" name="email" id="email" placeholder="Email">
+                <textarea  class="input" name="contenido" id="contenido" cols="30" rows="10" placeholder="Mensaje"></textarea>
                 <input class="input" type="submit" value="Enviar">
             </form>
-            <a href="#" id="send_mail">send mail</a>
         </div>
     </footer>
 
@@ -116,7 +115,7 @@
         agent-id="4b832309-6026-4313-b20b-b101d782db2c"
         language-code="es">
     </df-messenger>
-    
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://kit.fontawesome.com/c15b744a04.js" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
