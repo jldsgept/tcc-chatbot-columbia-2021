@@ -78,15 +78,22 @@ const webhook = async (req, res) => {
 
     async function verFactura(agent) {
         let sqlstring, cedula, rs
+        let sqlstring_aux, rs_aux
         cedula = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
+        sqlstring_aux = `SELECT * FROM clientes where cedula = ('${cedula}')`
         try{
             rs = await pool.query(sqlstring)
+            rs_aux = await pool.query(sqlstring_aux)
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
                 agent.add(`Estimado cliente ${rs.rows[i].p_nombre}, su proxima factura es por el monto de ${rs.rows[i].p_monto} GS y vence en fecha ${rs.rows[i].p_vencimiento}`)
             }
             if (rs.rowCount === 0) {
-                agent.add(`No se han encontrado facturas pendientes para el numero de cedula: ${cedula}`);
+                if (rs_aux.rowCount > 0) {
+                    agent.add(`Estimado cliente ${rs_aux.rows[0].nombre}, usted no posee facturas pendientes de vencimiento`);
+                }else{
+                    agent.add(`Lo sentimos, no tenemos registrado ningun cliente con el numero de cedula: ${cedula}`);
+                }
             }
             agent.add('Le podemos ayudar en algo mas?');
         }catch(e){
