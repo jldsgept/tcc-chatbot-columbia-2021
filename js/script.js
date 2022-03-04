@@ -3,7 +3,7 @@ FORM.addEventListener('submit', handleSubmit)
 
 function handleSubmit(event){
     event.preventDefault()
-    swal('Su mensaje ha sido enviado','Muchas Gracias','success');
+    swal('Su mensaje ha sido enviado!!','Muchas Gracias','success');
     /*const FORM_DATA = new FormData(this)
     let name, email, subject, message
     name = FORM_DATA.get('nombre')
