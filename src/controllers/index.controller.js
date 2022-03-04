@@ -30,7 +30,7 @@ const recibirMensajes = async (req, res) => {
     const contenido = req.body.contenido;
     try{
         const response = await pool.query(`INSERT INTO mensajes_sitio_web (fecha, nombre, email, contenido) VALUES (current_date, '${nombre}', '${email}', '${contenido}')`);
-        res.redirect('back');
+        res.redirect('https://jldsgept.github.io/tcc-chatbot-columbia-2021/');
     }catch(e) {
         console.log(e);
     }
