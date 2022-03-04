@@ -30,6 +30,7 @@ const recibirMensajes = async (req, res) => {
     const contenido = req.body.contenido;
     try{
         const response = await pool.query(`INSERT INTO mensajes_sitio_web (fecha, nombre, email, contenido) VALUES (current_date, '${nombre}', '${email}', '${contenido}')`);
+        res.json('Mensaje procesado correctamente!!');
     }catch(e) {
         console.log(e);
     }
