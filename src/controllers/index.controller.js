@@ -81,7 +81,7 @@ const webhook = async (req, res) => {
         let sqlstring_aux, rs_aux
         cedula = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_info_proxima_factura('${cedula}')`
-        sqlstring_aux = `SELECT * FROM clientes where cedula = ('${cedula}')`
+        sqlstring_aux = `SELECT * FROM clientes where cedula = '${cedula}'`
         try{
             rs = await pool.query(sqlstring)
             rs_aux = await pool.query(sqlstring_aux)
@@ -106,7 +106,7 @@ const webhook = async (req, res) => {
         let sqlstring_aux, rs_aux
         codigo = agent.parameters['number']
         sqlstring = `SELECT * FROM f_get_info_errores_frecuentes('${codigo}')`
-        sqlstring_aux = `SELECT * FROM errores where codigo = ('${codigo}')`
+        sqlstring_aux = `SELECT * FROM errores where codigo = '${codigo}'`
         try{
             rs = await pool.query(sqlstring)
             rs_aux = await pool.query(sqlstring_aux)
