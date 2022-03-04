@@ -121,8 +121,10 @@ const webhook = async (req, res) => {
         sqlstring = `SELECT * FROM f_get_info_servicios('${tipo_servicio}')`
         try{
             rs = await pool.query(sqlstring)
-            agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
             for (let i = 0; i <= (rs.rowCount - 1); i++) {
+                if (i === 0) {
+                    agent.add('Estos son los servicios que tenemos de '+ tipo_servicio);
+                }
                 agent.add(`${rs.rows[i].p_servicio} por ${rs.rows[i].p_precio} GS/mes \n ${rs.rows[i].p_especificaciones}`)
                 agent.add(new Card({
 					                title: `${rs.rows[i].p_servicio} por ${rs.rows[i].p_precio} GS/mes`,
@@ -132,6 +134,9 @@ const webhook = async (req, res) => {
                                     buttonUrl: rs.rows[i].p_url_imagen
 				                    })
 			            )
+            }
+            if (rs.rowCount === 0) {
+                agent.add('Lo sentimos, no tenemos servicios sobre '+tipo_servicio);
             }
             agent.add('Le interesa algun otro servicio?');
         }catch(e){
