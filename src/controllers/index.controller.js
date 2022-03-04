@@ -24,6 +24,17 @@ const welcome = async (req, res) => {
     }
 };
 
+const recibirMensajes = async (req, res) => {
+    const nombre = req.body.nombre;
+    const email = req.body.email;
+    const contenido = req.body.contenido;
+    try{
+        const response = await pool.query(`INSERT INTO mensajes_sitio_web (fecha, nombre, email, contenido) VALUES (current_date, '${nombre}', '${email}', '${contenido}')`);
+    }catch(e) {
+        console.log(e);
+    }
+};
+
 const getServicios = async (req, res) => {
     try{
         const response = await pool.query(`SELECT * FROM f_get_info_servicios('APP')`)
@@ -168,6 +179,7 @@ const webhook = async (req, res) => {
 
 module.exports = {
     welcome,
+    recibirMensajes,
     getServicios,
     webhook
 };
